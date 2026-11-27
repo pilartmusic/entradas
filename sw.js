@@ -3,8 +3,8 @@
    Para el esqueleto: primero la red (así una corrección llega enseguida) y, si no hay señal, lo guardado.
    NUNCA guarda respuestas del servidor de entradas (son pedidos POST a otro dominio: ni se tocan).
    Al cambiar archivos conviene subir el número de VERSION. */
-var VERSION = 'pmf-entradas-v1';
-var ESQUELETO = ['./', 'index.html', '404.html', 'app.css', 'config.js', 'comun.js', 'qr.js', 'entradas.js', 'puerta.js', 'puerta/', 'puerta/index.html', 'vendor/jsQR.js', 'img/logo-fest.png', 'img/logo-academy.png'];
+var VERSION = 'pmf-entradas-v2';
+var ESQUELETO = ['./', 'index.html', '404.html', 'app.css', 'config.js', 'comun.js', 'qr.js', 'entradas.js', 'puerta.js', 'puerta/', 'puerta/index.html', 'vendor/jsQR.js', 'vendor/jsQR-LICENSE.txt', 'img/logo-fest.png', 'img/logo-academy.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(VERSION).then(function (c) {

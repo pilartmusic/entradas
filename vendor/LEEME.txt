@@ -1,0 +1,6 @@
+jsQR.js: lector de QR para los celulares que no traen uno propio (iPhone).
+Paquete "jsqr" de npm, versión 1.4.0 (archivo dist/jsQR.js, sin modificar). Autor: Cosmo Wolfe (github.com/cozmo/jsQR). Licencia Apache 2.0: jsQR-LICENSE.txt.
+Bajado el 27/11/2026 de https://registry.npmjs.org/jsqr/-/jsqr-1.4.0.tgz
+Integridad del paquete (la que publica npm): sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==
+SHA-256 de jsQR.js: bc40c8a15196236b2314db0856f72ca0b49980cd5413b8c852a7349f5fee0859
+Es idéntico, byte por byte, al dist/jsQR.js del repositorio del autor en el commit 49a9633931fb8030ac2fc9cecc121d6e5a19f9a3 (el que npm registra como origen de la 1.4.0).

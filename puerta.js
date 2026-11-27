@@ -147,7 +147,7 @@
   function control() {
     var L = G.lee(K_LISTA), cola = G.lee(K_COLA) || [], idx = {}, viejos = {};
     var enviando = false, fallo = false, pausado = false, vivo = true;
-    var flujo = null, lector = null, leyendo = false, relojLector = null, relojSync = null, relojBarra = null;
+    var flujo = null, lector = null, leyendo = false, relojLector = null, relojSync = null, relojBarra = null, ultimoTexto = '', ultimoTs = 0;
     var lienzo = document.createElement('canvas');
 
     function indexar() {
@@ -295,7 +295,7 @@
     function color(c) { raiz.style.background = c; document.body.style.background = c; }
     function irEspera() {
       PMF.vaciar(otra); otra.className = 'oculto'; espera.className = '';
-      color(OSCURO); pausado = false; pintarPie();
+      color(OSCURO); pausado = false; ultimoTs = new Date().getTime(); pintarPie();
       if (video && flujo) { try { var pr = video.play(); if (pr && pr.then) { pr.then(function () { /* ok */ }, function () { /* nada */ }); } } catch (e) { /* nada */ } }
       window.scrollTo(0, 0);
     }
@@ -602,7 +602,12 @@
         if (r && r.data) { leido(r.data); }
       } catch (e) { /* cuadro que no se pudo leer */ }
     }
-    function leido(texto) { if (pausado) { return; } pausado = true; procesar(texto); }
+    /* El mismo QR que se acaba de leer se ignora 3 segundos al volver al escáner: si no, la cámara lo vuelve a tomar y sale "ya ingresó". */
+    function leido(texto) {
+      if (pausado) { return; }
+      if (texto === ultimoTexto && new Date().getTime() - ultimoTs < 3000) { return; }
+      pausado = true; ultimoTexto = texto; procesar(texto);
+    }
 
     // ----- En marcha -----
     function alVolverSenal() { fallo = false; pintarBarra(); sincronizar(); }
@@ -1056,7 +1061,7 @@
   PMF.registrarSW();
   if (!PMF.hayServidor()) { PMF.noDisponible(app); return; }
   ses = G.lee(K_SES);
-  if (pasoLaFecha()) { borrarSesionYLista(); }
+  if (pasoLaFecha()) { borrarSesionYLista(); G.saca(K_ALERTAS); }
   if (ses && (!ses.s || sesionVencida(ses))) { borrarSesionYLista(); }
   if (ses) { abrirRol(); } else { G.saca(K_LISTA); pantallaClave(); }
 })();

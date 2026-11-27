@@ -166,7 +166,10 @@
           h('strong', 'color:#ffffff', x.para || 'un familiar'),
           ' (' + PMF.rango(x.nums) + ')' + (x.ing ? ' · ' + (x.ing >= x.nums.length ? 'ya ingresaron' : 'ingresaron ' + x.ing) : '')
         ]),
-        (x.rec && !d.cerrado) ? h('button', 'border:0;background:transparent;padding:6px 0;font-size:13px;font-weight:800;color:#ffffff;text-decoration:underline', 'Recuperar', { type: 'button', on: { click: function () { hojaRecuperar(x); } } }) : null
+        h('span', 'flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px', [
+          (x.rec && !d.cerrado) ? h('button', 'border:0;background:transparent;padding:6px 0;font-size:13px;font-weight:800;color:#ffffff;text-decoration:underline', 'Recuperar', { type: 'button', on: { click: function () { hojaRecuperar(x); } } }) : null,
+          (x.link && x.rec) ? h('button', 'border:0;background:transparent;padding:6px 0;font-size:12px;font-weight:700;color:#d9d2f2;text-decoration:underline', 'Ver el link', { type: 'button', on: { click: function () { var o = abrirHoja(); listoParaEnviar(o, { link: x.link, nums: x.nums, para: x.para }, true); } } }) : null
+        ])
       ]);
     }
     for (i = 0; d.pasadas && i < d.pasadas.length; i++) { pasadas.push(filaPasada(d.pasadas[i])); }
@@ -326,7 +329,7 @@
         if (r && (r.e === 'no' || r.e === 'apagado')) { o.cerrar(); cargar(false); return; }
         err.textContent = textoError(r && r.e);
         if (r && r.e === 'cerrado') { cargar(false); }
-      }, function () { soltar(); err.textContent = textoError('red'); });
+      }, function () { soltar(); err.textContent = 'No hay señal. Antes de probar de nuevo, cerrá esta ventana y fijate si ya figuran como pasadas en tu página.'; cargar(false); });
     }
     bWa.addEventListener('click', function () { pedir(bWa); });
     bMail.addEventListener('click', function () { pedir(bMail); });
@@ -350,14 +353,14 @@
     ]);
   }
   /* Después de Pasar: el link ya existe y los tres botones son enlaces directos (así el navegador no los bloquea). */
-  function listoParaEnviar(o, r) {
+  function listoParaEnviar(o, r, otraVez) {
     var n = (r.nums || []).length, texto = PMF.pon(EV.textoPasar, { n: PMF.entradas(n), link: r.link });
     var aviso = h('p', 'margin:10px 0 0;font-size:13px;font-weight:700;color:#0f7a45;text-align:center;min-height:18px', '');
-    o.fijar(true);
+    o.fijar(!otraVez);
     o.limpiar();
     PMF.agrega(o.caja, [
-      h('h2', 'margin:18px 0 0;font-size:22px;font-weight:800;color:#4a3f8c', '¡Listo! Ahora mandale el link'),
-      h('p', 'margin:8px 0 0;font-size:14px;line-height:1.5;color:#3d3654', [h('strong', null, PMF.entradas(n)), ' para ', h('strong', null, r.para || ''), ' (' + PMF.rango(r.nums) + '). Ya tienen sus QR nuevos.']),
+      h('h2', 'margin:18px 0 0;font-size:22px;font-weight:800;color:#4a3f8c', otraVez ? 'El link de ' + (r.para || 'tu familiar') : '¡Listo! Ahora mandale el link'),
+      h('p', 'margin:8px 0 0;font-size:14px;line-height:1.5;color:#3d3654', [h('strong', null, PMF.entradas(n)), ' para ', h('strong', null, r.para || ''), ' (' + PMF.rango(r.nums) + ').' + (otraVez ? ' Es el mismo link que ya le mandaste.' : ' Ya tienen sus QR nuevos.')]),
       h('p', 'margin:18px 0 0;font-size:13px;font-weight:700;color:#4a3f8c', 'Link de ' + (r.para || 'tu familiar')),
       h('div', 'margin:8px 0 0;padding:12px 14px;border:1px solid #d9d6e8;border-radius:12px;font-size:13px;line-height:1.4;color:#150d33;word-break:break-all;-webkit-user-select:all;user-select:all', r.link),
       h('div', 'margin:18px 0 0;padding:14px;border-radius:12px;background:#fdf2f7;border-left:4px solid #cf1965;font-size:13px;line-height:1.5;color:#3d3654', [
@@ -371,7 +374,7 @@
         } } })
       ]),
       aviso,
-      h('button', 'margin:6px 0 0;height:44px;border:0;background:transparent;color:#6b6585;font-size:14px;font-weight:600', 'Ya lo mandé · cerrar', { type: 'button', on: { click: function () { o.cerrar(); cargar(false); } } })
+      h('button', 'margin:6px 0 0;height:44px;border:0;background:transparent;color:#6b6585;font-size:14px;font-weight:600', otraVez ? 'Cerrar' : 'Ya lo mandé · cerrar', { type: 'button', on: { click: function () { o.cerrar(); cargar(false); } } })
     ]);
     o.caja.scrollTop = 0;
   }
