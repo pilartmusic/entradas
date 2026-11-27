@@ -1,0 +1,31 @@
+/* Pilart Music Fest 2026 · entradas digitales. Los estilos de cada pantalla van en línea, copiados de los bocetos aprobados. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; }
+body { font-family: Montserrat, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; background: #150d33; color: #ffffff; -webkit-font-smoothing: antialiased; }
+#app { max-width: 480px; margin: 0 auto; min-height: 100vh; }
+button, input, textarea, select { font-family: Montserrat, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button:disabled { opacity: 0.55; cursor: default; }
+a { -webkit-tap-highlight-color: transparent; }
+input, textarea { -webkit-appearance: none; appearance: none; }
+h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
+canvas.qr { display: block; }
+video { background: #000000; }
+.pantalla { min-height: 100vh; }
+.oculto { display: none !important; }
+/* Barra de arriba del control: en celulares angostos achica la letra para que entre en un renglón. */
+@media (max-width: 400px) { .barra-ctl span { font-size: 12px !important; } }
+@media (max-width: 350px) { .barra-ctl span { font-size: 11px !important; } }
+/* iPhone viejos (antes de iOS 14.5) no entienden la separación «gap» en las filas flexibles: se reemplaza por márgenes. */
+@supports not (inset: 0) {
+  [style*="display:flex"]:not([style*="flex-direction:column"])[style*="gap:2px"] > * + * { margin-left: 2px; }
+  [style*="display:flex"][style*="flex-direction:column"][style*="gap:2px"] > * + * { margin-top: 2px; }
+  [style*="display:flex"]:not([style*="flex-direction:column"])[style*="gap:8px"] > * + * { margin-left: 8px; }
+  [style*="display:flex"][style*="flex-direction:column"][style*="gap:8px"] > * + * { margin-top: 8px; }
+  [style*="display:flex"]:not([style*="flex-direction:column"])[style*="gap:10px"] > * + * { margin-left: 10px; }
+  [style*="display:flex"][style*="flex-direction:column"][style*="gap:10px"] > * + * { margin-top: 10px; }
+  [style*="display:flex"]:not([style*="flex-direction:column"])[style*="gap:12px"] > * + * { margin-left: 12px; }
+  [style*="display:flex"][style*="flex-direction:column"][style*="gap:12px"] > * + * { margin-top: 12px; }
+  [style*="display:flex"]:not([style*="flex-direction:column"])[style*="gap:14px"] > * + * { margin-left: 14px; }
+  [style*="display:flex"][style*="flex-direction:column"][style*="gap:14px"] > * + * { margin-top: 14px; }
+}

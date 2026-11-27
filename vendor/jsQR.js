@@ -1,0 +1,1 @@
+/* FALTA: acá va la biblioteca jsQR (lector de QR para los celulares que no traen BarcodeDetector, como los iPhone). Mientras este archivo tenga solo este comentario, window.jsQR no existe y el control avisa que hay que usar el ingreso por familia. */
